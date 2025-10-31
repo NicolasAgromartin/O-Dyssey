@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : Singleton<SceneLoader>
 {
-    public event Action OnSceneLoaded;
+    public static event Action OnSceneLoaded;
     public event Action OnLevelLoaded;
 
 

@@ -16,6 +16,10 @@ public class GateButton : MonoBehaviour, IInteractable
     [Header("Gates")]
     [SerializeField] List<Gate> linkedGates = new();
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource sfxSource;
+    [SerializeField] private AudioClip gateButtonClip;
+
 
     #region Triggers
     private void OnTriggerEnter(Collider other)
@@ -39,6 +43,7 @@ public class GateButton : MonoBehaviour, IInteractable
         foreach(Gate gate in linkedGates)
         {
             gate.ToggleOpen();
+            sfxSource.PlayOneShot(gateButtonClip);
         }
 
     }

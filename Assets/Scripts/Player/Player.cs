@@ -27,6 +27,12 @@ public class Player : MonoBehaviour
     [SerializeField] private LevelManager levelManager;
 
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource SFX_Source;
+    [SerializeField] private AudioClip pickabeClip;
+    [SerializeField] private AudioClip victoryClip;
+
+
 
 
     #region Life Cykle
@@ -53,19 +59,21 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("VictoryPoint"))
-        {
+        {           
+            SFX_Source.PlayOneShot(victoryClip); 
+
             OnVictoryPointReached?.Invoke();
-            Debug.Log("Touched victory");
         }
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
             interactionMark.SetActive(true);
-            Debug.Log("Can interact!");
         }
 
         if (other.gameObject.CompareTag("Pickable"))
         {
+            // pick
+            SFX_Source.PlayOneShot(pickabeClip);
             other.gameObject.GetComponent<Pickable>().PickUp(this);
         }
     }
@@ -99,13 +107,20 @@ public class Player : MonoBehaviour
     #region Interaction
     private void Interact()
     {
-        Debug.Log("Interact");
 
         foreach(Collider collider in Physics.OverlapSphere(interactionArea.transform.position, .5f, layersToInteract))
         {
             if (collider.TryGetComponent(out IInteractable obj))
             {
                 obj.Interact();
+                if(obj is GateButton)
+                {
+                    // play button sound
+                }
+                if(obj is Pickable)
+                {
+                    // play pickupSound
+                }
                 break;
             }
         }

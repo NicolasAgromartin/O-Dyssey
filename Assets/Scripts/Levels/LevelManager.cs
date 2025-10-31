@@ -24,6 +24,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private TMP_Text timerValue;
 
 
+    [Header("Timer Audio")]
+    [SerializeField] private AudioSource counterSource;
+    [SerializeField] private AudioClip countClip;
+    [SerializeField] private AudioClip goClip;
+    [Header("Items Audio")]
+
+
+    
     private readonly SceneName finalLevel = SceneName.Level_03;
 
 
@@ -38,8 +46,6 @@ public class LevelManager : MonoBehaviour
     private void OnDisable()
     {
         SceneLoader.Instance.OnLevelLoaded -= HandleLevelLoaded;
-
-        
     }
     #endregion
 
@@ -54,7 +60,6 @@ public class LevelManager : MonoBehaviour
 
     public void IncreaseTime()
     {
-        Debug.Log("Time increased");
         elapsedTime += 10f;
     }
     #endregion
@@ -81,33 +86,41 @@ public class LevelManager : MonoBehaviour
 
 
 
-
     private float elapsedTime;
-    private int counter;
+    private int lastNumber = -1;
+
     public IEnumerator StartTimer(TMP_Text value, float startAt, bool initial)
     {
-        counter++;
-        Debug.Log(counter);
-
         if (initial) countdownPanel.SetActive(true);
         else timerPanel.SetActive(true);
-        
+
         elapsedTime = startAt;
 
         while (elapsedTime > 0f)
         {
             elapsedTime -= Time.deltaTime;
-            value.text = Mathf.CeilToInt(elapsedTime).ToString();
+            int currentNumber = Mathf.CeilToInt(elapsedTime);
 
-            if (initial && elapsedTime <= 0f) value.text = "!GO";
+            // Solo actualiza y reproduce sonido si el número cambió
+            if (currentNumber != lastNumber)
+            {
+                lastNumber = currentNumber;
+                value.text = currentNumber.ToString();
+
+                if(initial && currentNumber != 0) counterSource.PlayOneShot(countClip);
+            }
 
             yield return null;
         }
-        
 
+        // Al terminar el conteo
         if (initial)
         {
+            value.text = "!GO";
+            counterSource.PlayOneShot(goClip);
             yield return new WaitForSeconds(1f);
+            counterSource.Stop();
+
             countdownPanel.SetActive(false);
             OnLevelStart?.Invoke();
             StartCoroutine(StartTimer(timerValue, 15f, false));
@@ -118,6 +131,7 @@ public class LevelManager : MonoBehaviour
             OnTimerEnd?.Invoke();
         }
     }
+
 
     private void StopTimer()
     {
