@@ -8,9 +8,6 @@ public class MusicManager : Singleton<MusicManager>
     [SerializeField] private AudioMixerSnapshot game_Snapshot;
     [SerializeField] private AudioMixerSnapshot gameOver_Snapshot;
 
-    [Header("Mixer")]
-    [SerializeField] private AudioMixer mixer;
-
     private void OnEnable()
     {
         SceneLoader.OnSceneLoaded += ChangeMusic;

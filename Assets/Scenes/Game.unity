@@ -554,9 +554,9 @@ MonoBehaviour:
   timerPanel: {fileID: 956827519}
   timerValue: {fileID: 1146777455}
   counterSource: {fileID: 200806308}
+  countdownVoiceClip: {fileID: 8300000, guid: f4b9abd7d30bfa64c8a49a106a47b8b3, type: 3}
   countClip: {fileID: 8300000, guid: 06f69c42c1c77684cbb4acccbc9611cd, type: 3}
   goClip: {fileID: 8300000, guid: 8653b7a67115cc143b6229c66c91d293, type: 3}
-  boltSource: {fileID: 0}
 --- !u!82 &200806308
 AudioSource:
   m_ObjectHideFlags: 0
@@ -566,7 +566,7 @@ AudioSource:
   m_GameObject: {fileID: 200806303}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 4050598267648806589, guid: 5f731c76064434b4ba03b1fcabb3d48c, type: 2}
+  OutputAudioMixerGroup: {fileID: -2612374616109238313, guid: 5f731c76064434b4ba03b1fcabb3d48c, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
@@ -783,7 +783,6 @@ GameObject:
   m_Component:
   - component: {fileID: 330585546}
   - component: {fileID: 330585545}
-  - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
   m_Layer: 0
@@ -793,14 +792,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &330585544
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
 --- !u!20 &330585545
 Camera:
   m_ObjectHideFlags: 0

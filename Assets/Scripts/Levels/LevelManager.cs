@@ -26,6 +26,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Timer Audio")]
     [SerializeField] private AudioSource counterSource;
+    [SerializeField] private AudioClip countdownVoiceClip;
     [SerializeField] private AudioClip countClip;
     [SerializeField] private AudioClip goClip;
     [Header("Items Audio")]
@@ -96,6 +97,8 @@ public class LevelManager : MonoBehaviour
 
         elapsedTime = startAt;
 
+        if(initial) counterSource.PlayOneShot(countdownVoiceClip);
+
         while (elapsedTime > 0f)
         {
             elapsedTime -= Time.deltaTime;
@@ -107,7 +110,7 @@ public class LevelManager : MonoBehaviour
                 lastNumber = currentNumber;
                 value.text = currentNumber.ToString();
 
-                if(initial && currentNumber != 0) counterSource.PlayOneShot(countClip);
+                //if(initial && currentNumber != 0) counterSource.PlayOneShot(countClip);
             }
 
             yield return null;
@@ -117,7 +120,7 @@ public class LevelManager : MonoBehaviour
         if (initial)
         {
             value.text = "!GO";
-            counterSource.PlayOneShot(goClip);
+            //counterSource.PlayOneShot(goClip);
             yield return new WaitForSeconds(1f);
             counterSource.Stop();
 
